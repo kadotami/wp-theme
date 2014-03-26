@@ -1,0 +1,1 @@
+(function(){console.log("aa")}).call(this),function(){console.log("sampleああああ")}.call(this);

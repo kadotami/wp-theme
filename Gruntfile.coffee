@@ -11,9 +11,17 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     coffee:
+      dist:
+        files: [
+          expand: true
+          cwd: "library/coffee"
+          src: "{,*/}*.coffee"
+          dest: "assets/javascripts"
+          ext: ".js"
+        ]
       compile:
         files:
-          "assets/javascripts/main.js": ["library/coffee/{,*/}*.{coffee,litcoffee,coffee.md}"]
+          "main.js": ["library/coffee/{,*/}*.{coffee,litcoffee,coffee.md}"]
 
     sass:
       dist:
@@ -21,12 +29,15 @@ module.exports = (grunt) ->
           "style.css": ["library/styles/{,*/}*.{scss,sass}"]
 
     watch:
-        coffee:
-          files: ["library/coffee/{,*/}*.{coffee,litcoffee,coffee.md}"]
-          tasks: ['coffee']
-        sass:
-          files: ["library/styles/{,*/}*.{scss,sass}"]
-          tasks: ['sass']
+      coffee:
+        files: ["library/coffee/{,*/}*.{coffee,litcoffee,coffee.md}"]
+        tasks: [
+          "coffee"
+          "uglify"
+        ]
+      sass:
+        files: ["library/styles/{,*/}*.{scss,sass}"]
+        tasks: ['sass']
 
     clean:
       dist:
@@ -40,19 +51,19 @@ module.exports = (grunt) ->
       dist:
         files: [
           {
-            dest: "assets/javascripts/vendor.js"
             src: [
               # add bower components here after bower install
               # "bower_components/bootstrap/dist/js/bootstrap.js"
               "bower_components/jquery/dist/jquery.js"
             ]
+            dest: "assets/javascripts/vendor.js"
           }
           {
-            dest: "assets/styles/vendor.css"
             src: [
               # add bower components here after bower install
               # "bower_components/bootstrap/dist/css/bootstrap.css"
             ]
+            dest: "assets/styles/vendor.css"
           }
         ]
 
@@ -60,12 +71,12 @@ module.exports = (grunt) ->
       dist:
         files: [
           {
-            dest: "assets/javascripts/vendor.js"
             src: "assets/javascripts/vendor.js"
+            dest: "assets/javascripts/vendor.js"
           }
           {
-            dest: "assets/javascripts/main.js"
-            src: "assets/javascripts/main.js"
+            src: "main.js"
+            dest: "main.js"
           }
         ]
 
@@ -73,12 +84,12 @@ module.exports = (grunt) ->
       dist:
         files: [
           {
-            dest: "assets/styles/vendor.css"
             src: "assets/styles/vendor.css"
+            dest: "assets/styles/vendor.css"
           }
           {
-            dest: "style.css"
             src: "style.css"
+            dest: "style.css"
           }
         ]
 
